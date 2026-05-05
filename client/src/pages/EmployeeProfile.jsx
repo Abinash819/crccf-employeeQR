@@ -223,7 +223,7 @@ export default function EmployeeProfile() {
           max-width: 440px;
           background: #ffffff;
           border-radius: 24px;
-          overflow: hidden;
+          overflow: visible; /* allow avatar ring to overlap without clipping */
           box-shadow: 0 32px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
           position: relative;
         }
@@ -240,12 +240,19 @@ export default function EmployeeProfile() {
         /* ── Hero section ────────────────────────────────────────────── */
         .ep-hero {
           position: relative;
-          height: 140px;
+          height: 160px; /* slightly taller so avatar sits fully within view */
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-end;
-          padding-bottom: 12px;
+          padding-bottom: 0;
+          overflow: visible; /* let avatar ring overflow below hero */
+          border-radius: 24px 24px 0 0; /* keep rounded top corners */
+        }
+        /* clip only the decorative backgrounds, not the avatar */
+        .ep-hero-bg,
+        .ep-hero-dots {
+          border-radius: 24px 24px 0 0;
           overflow: hidden;
         }
         .ep-hero-bg {
@@ -261,13 +268,13 @@ export default function EmployeeProfile() {
         }
         .ep-avatar-ring {
           position: relative;
-          z-index: 2;
-          width: 96px;
-          height: 96px;
+          z-index: 10;
+          width: 104px;
+          height: 104px;
           border-radius: 50%;
           background: linear-gradient(135deg, #a78bfa, #818cf8);
           padding: 3px;
-          margin-bottom: -48px; /* overlap body */
+          margin-bottom: -52px; /* overlap into body section */
           box-shadow: 0 8px 32px rgba(109,40,217,0.5);
         }
         .ep-avatar {
@@ -314,7 +321,7 @@ export default function EmployeeProfile() {
 
         /* ── Body ────────────────────────────────────────────────────── */
         .ep-body {
-          padding: 60px 24px 24px; /* 60px top to clear avatar overlap */
+          padding: 64px 24px 24px; /* 64px top to clear the 104px avatar that overlaps by 52px */
           text-align: center;
         }
         .ep-name {
